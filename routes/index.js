@@ -3,8 +3,8 @@ var router = express.Router();
 const stringController = require('../controller').string;
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', function(_, res, _) {
+  res.render('index');
 });
 
 router.get('/list', stringController.getAllStrings);
