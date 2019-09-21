@@ -11,8 +11,8 @@ module.exports = {
       res.status(500).send(e);
     }
   },
-  async checkThenAdd(req,res) {
-    return res.json("hello");
+  async checkThenAdd(req, res) {
+    return res.json(req.body);
     try {
       const stringCollection = await StringPair.create({
           stringA
