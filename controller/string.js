@@ -1,27 +1,49 @@
 const StringPair = require('../models').StringPair;
+const fun = require('../helpers/fun');
 
 module.exports = {
-  async getAllStrings(req, res) {
+  async getAllStrings(_, res) {
     try {
       const stringCollection = await StringPair.findAll();
-      res.status(201).send(stringCollection);
+      res.status(200).send(stringCollection);
     }
     catch(e) {
       console.log(e);
       res.status(500).send(e);
     }
   },
+
   async checkThenAdd(req, res) {
-    return res.json(req.body);
+    const strA = req.body.strA;
+    const strB = req.body.strB;
+
+    // validation starts
+    if(!strA) { // must pass first parameter
+      res.status(422).json({ errors: ['strA is required.'] });
+      return;
+    }
+
+    if(typeof strB === 'undefined') { // must pass, atleast with an empty string
+      res.status(422).json({ errors: ['strB can not be undefined.'] });
+      return;
+    }
+    // validation ends
+
     try {
-      const stringCollection = await StringPair.create({
-          stringA
+      const canBeObtained = fun(strA, strB);
+      if(canBeObtained) {
+        await StringPair.create({
+            strA,
+            strB
+        });
+      }
+      res.status(200).json({
+        result: canBeObtained
       });
-      res.status(201).send(stringCollection);
     }
     catch(e) {
       console.log(e);
-      res.status(400).send(e);
+      res.status(500).send(e);
     }             
   },
 }

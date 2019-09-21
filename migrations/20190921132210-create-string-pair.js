@@ -8,10 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      stringA: {
+      strA: {
         type: Sequelize.STRING
       },
-      stringB: {
+      strB: {
         type: Sequelize.STRING
       },
       createdAt: {
